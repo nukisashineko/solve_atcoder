@@ -18,47 +18,58 @@ describe Agc034A do
   context'duplicated_zone_check' do
     context 'not need reverse' do
       it 'All or Nothing' do
-        expect(Agc034A.duplicated_zone_check(0,9,'..........', false)).to be_truthy
-        expect(Agc034A.duplicated_zone_check(0,9,'.########.', false)).to be_falsey
+        expect(Agc034A.duplicated_zone_check(0,11,'#..........#', false)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,11,'#.########.#', false)).to be_falsey
       end
       it 'can not move' do
-        expect(Agc034A.duplicated_zone_check(0,9,'.##.......', false)).to be_falsey
+        expect(Agc034A.duplicated_zone_check(0,11,'#.##.......#', false)).to be_falsey
       end
       it 'selected only one way' do
-        expect(Agc034A.duplicated_zone_check(0,10,'.#.#.#.#.#.', false)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,12,'#.#.#.#.#.#.#', false)).to be_truthy
       end
       it 'can reverse order' do
-        expect(Agc034A.duplicated_zone_check(0,10,'...#.#.#.#.', false)).to be_truthy
-        expect(Agc034A.duplicated_zone_check(0,10,'.#.#.#.#...', false)).to be_truthy
-        expect(Agc034A.duplicated_zone_check(0,10,'.#.#.#...#.', false)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,12,'#...#.#.#.#.#', false)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,12,'#.#.#.#.#...#', false)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,12,'#.#.#.#...#.#', false)).to be_truthy
       end
       it 'can not reverse order' do
-        expect(Agc034A.duplicated_zone_check(0,9,'..#.#.#.#.', false)).to be_truthy
-        expect(Agc034A.duplicated_zone_check(0,9,'.#.#.#.#..', false)).to be_truthy
-        expect(Agc034A.duplicated_zone_check(0,9,'.#.#.#..#.', false)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,11,'#..#.#.#.#.#', false)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,11,'#.#.#.#.#..#', false)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,11,'#.#.#.#..#.#', false)).to be_truthy
       end
     end
 
     context 'need reverse' do
       it 'All or Nothing' do
-        expect(Agc034A.duplicated_zone_check(0,9,'..........', true)).to be_truthy
-        expect(Agc034A.duplicated_zone_check(0,9,'.#########', true)).to be_falsey
+        expect(Agc034A.duplicated_zone_check(0,11,'#..........#', true)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,11,'#.##########', true)).to be_falsey
       end
       it 'can not move' do
-        expect(Agc034A.duplicated_zone_check(0,9,'.##.......', true)).to be_falsey
+        expect(Agc034A.duplicated_zone_check(0,11,'#.##.......#', true)).to be_falsey
       end
       it 'selected only one way' do
-        expect(Agc034A.duplicated_zone_check(0,10,'.#.#.#.#.#.', true)).to be_falsey
+        expect(Agc034A.duplicated_zone_check(0,12,'#.#.#.#.#.#.#', true)).to be_falsey
       end
       it 'can reverse order' do
-        expect(Agc034A.duplicated_zone_check(0,10,'...#.#.#.#.', true)).to be_truthy
-        expect(Agc034A.duplicated_zone_check(0,10,'.#.#.#.#...', true)).to be_truthy
-        expect(Agc034A.duplicated_zone_check(0,10,'.#.#.#...#.', true)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,12,'#...#.#.#.#.#', true)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,12,'..#.#.#.#...#', true)).to be_truthy
+        expect(Agc034A.duplicated_zone_check(0,12,'#.#.#.#...#.#', true)).to be_truthy
       end
       it 'can not reverse order' do
-        expect(Agc034A.duplicated_zone_check(0,9,'..#.#.#.#.', true)).to be_falsey
-        expect(Agc034A.duplicated_zone_check(0,9,'.#.#.#.#..', true)).to be_falsey
-        expect(Agc034A.duplicated_zone_check(0,9,'.#.#.#..#.', true)).to be_falsey
+        expect(Agc034A.duplicated_zone_check(0,12,'#.#..#.#.#.#.#', true)).to be_falsey
+        expect(Agc034A.duplicated_zone_check(0,12,'..#.#.#.#.#..#', true)).to be_falsey
+        expect(Agc034A.duplicated_zone_check(0,12,'#.#.#.#.#..#.#', true)).to be_falsey
+      end
+    end
+
+    context 'can reverse before start_i' do
+      it 'return true' do
+        expect(Agc034A.duplicated_zone_check(0,12,'...#.#.#..#.#', true)).to be_truthy
+      end
+    end
+    context 'can reverse after end_i' do
+      it 'return true' do
+        expect(Agc034A.duplicated_zone_check(0,12,'#..#..#..#...', true)).to be_truthy
       end
     end
   end

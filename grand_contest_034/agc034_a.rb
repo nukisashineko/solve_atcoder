@@ -18,12 +18,14 @@ class Agc034A
 
   def self.duplicated_zone_check(start_i, end_i, line_map, need_reverse)
     part_of_line_map = line_map[start_i..end_i]
-    non_duplicated_zone_check(start_i, end_i, line_map) &&
+    line_map[start_i + 1] == '.' && line_map[end_i - 1] == '.' && !part_of_line_map.match(/##/) &&
         (!need_reverse || !!part_of_line_map.match(/\.\.\./))
   end
 
   def self.have_duplicated_zone_calc(a,b,c,d,line_map)
-    duplicated_zone_check([a,b].min,[c,d].max,line_map, d < c)
+    non_duplicated_zone_check([a,b].min,[a,b].max,line_map) &&
+        non_duplicated_zone_check([c,d].min,[c,d].max,line_map) &&
+        duplicated_zone_check([a,b].max - 1,[c,d].min + 1, line_map, d <= c)
   end
 
   def self.calc(a, b, c, d, line_map)
@@ -31,7 +33,7 @@ class Agc034A
     b_i = b - 1
     c_i = c - 1
     d_i = d - 1
-    return non_duplicated_zone_check(a_i,c_i,line_map) && non_duplicated_zone_check(b_i,d_i,line_map) if (c_i <= b_i)
+    return non_duplicated_zone_check(a_i,c_i,line_map) && non_duplicated_zone_check(b_i,d_i,line_map) if (c_i < b_i)
     return have_duplicated_zone_calc(a_i, b_i, c_i, d_i,line_map)
   end
 

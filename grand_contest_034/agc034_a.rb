@@ -1,5 +1,3 @@
-
-
 class Agc034A
   def self.input()
     _, a, b, c, d = STDIN.gets.to_s.chomp.split(/ /)
@@ -17,15 +15,15 @@ class Agc034A
   end
 
   def self.duplicated_zone_check(start_i, end_i, line_map, need_reverse)
-    part_of_line_map = line_map[start_i..end_i]
-    line_map[start_i + 1] == '.' && line_map[end_i - 1] == '.' && !part_of_line_map.match(/##/) &&
+    part_of_line_map = line_map[(start_i - 1)..(end_i + 1)]
+    line_map[start_i] == '.' && line_map[end_i] == '.' && !part_of_line_map.match(/##/) &&
         (!need_reverse || !!part_of_line_map.match(/\.\.\./))
   end
 
   def self.have_duplicated_zone_calc(a,b,c,d,line_map)
     non_duplicated_zone_check([a,b].min,[a,b].max,line_map) &&
         non_duplicated_zone_check([c,d].min,[c,d].max,line_map) &&
-        duplicated_zone_check([a,b].max - 1,[c,d].min + 1, line_map, d <= c)
+        duplicated_zone_check([a,b].max,[c,d].min, line_map, d <= c)
   end
 
   def self.calc(a, b, c, d, line_map)

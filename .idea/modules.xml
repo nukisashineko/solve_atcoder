@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/grand_contest_034.iml" filepath="$PROJECT_DIR$/.idea/grand_contest_034.iml" />
+      <module fileurl="file://$PROJECT_DIR$/solve_atcoder.iml" filepath="$PROJECT_DIR$/solve_atcoder.iml" />
     </modules>
   </component>
 </project>
